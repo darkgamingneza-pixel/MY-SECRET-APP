@@ -53,6 +53,85 @@ button{
     display:none!important;
 }
 
+
+/* ==================================================
+   MY SWEET 🦋🦋 — ROMANTIC FLOATING EFFECT
+================================================== */
+
+.sweet-floating-container{
+    position:fixed;
+    inset:0;
+    z-index:2;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.sweet-floating{
+    position:absolute;
+    white-space:nowrap;
+    color:rgba(244,243,239,.18);
+    font-family:"Playfair Display",serif;
+    font-style:italic;
+    font-weight:500;
+    letter-spacing:-.02em;
+    text-shadow:
+        0 0 15px rgba(255,255,255,.05),
+        0 0 35px rgba(199,185,143,.04);
+    opacity:0;
+    animation:romanticFloat linear infinite;
+}
+
+.sweet-floating .butterfly{
+    font-family:Manrope,sans-serif;
+    font-style:normal;
+    display:inline-block;
+    margin-left:5px;
+    font-size:.8em;
+}
+
+@keyframes romanticFloat{
+
+    0%{
+        opacity:0;
+        transform:
+            translate3d(0,80px,0)
+            rotate(-7deg)
+            scale(.85);
+    }
+
+    12%{
+        opacity:.32;
+    }
+
+    35%{
+        transform:
+            translate3d(35px,-80px,0)
+            rotate(5deg)
+            scale(1);
+    }
+
+    60%{
+        opacity:.22;
+        transform:
+            translate3d(-25px,-190px,0)
+            rotate(-4deg)
+            scale(1.05);
+    }
+
+    82%{
+        opacity:.28;
+    }
+
+    100%{
+        opacity:0;
+        transform:
+            translate3d(30px,-360px,0)
+            rotate(8deg)
+            scale(.9);
+    }
+}
+
+
 /* ================================
    GRAIN
 ================================ */
@@ -76,6 +155,7 @@ button{
     75%{transform:translate(2%,2%)}
     100%{transform:translate(-2%,-2%)}
 }
+
 
 /* ================================
    PASSWORD GATE
@@ -196,6 +276,7 @@ body.open #site{
     pointer-events:auto;
 }
 
+
 /* ================================
    MUSIC PROMPT
 ================================ */
@@ -252,6 +333,7 @@ body.open #site{
     color:#000;
 }
 
+
 /* ================================
    TOP UI
 ================================ */
@@ -300,6 +382,7 @@ body.open #site{
 .sound svg{
     width:17px;
 }
+
 
 /* ================================
    HERO
@@ -387,6 +470,7 @@ body.open #site{
     margin:10px auto 0;
 }
 
+
 /* ================================
    CINEMATIC SECTIONS
 ================================ */
@@ -433,6 +517,7 @@ body.open #site{
     font-weight:300;
 }
 
+
 /* ================================
    HER SCENE
 ================================ */
@@ -452,6 +537,7 @@ body.open #site{
     font-style:italic;
     color:#aaa;
 }
+
 
 /* ================================
    REASONS
@@ -502,6 +588,7 @@ body.open #site{
     max-width:370px;
     margin-top:14px;
 }
+
 
 /* ================================
    PHOTOS
@@ -563,6 +650,7 @@ body.open #site{
     color:#aaa;
 }
 
+
 /* ================================
    VIDEO / MEDIA
 ================================ */
@@ -599,6 +687,7 @@ body.open #site{
     text-align:center;
 }
 
+
 /* ================================
    LETTER
 ================================ */
@@ -626,6 +715,7 @@ body.open #site{
     line-height:.7;
     margin:13px 12px 0 0;
 }
+
 
 /* ================================
    FINAL LOCK
@@ -670,6 +760,7 @@ body.open #site{
     font-size:12px;
     line-height:1.8;
 }
+
 
 /* ================================
    FINAL REVEAL
@@ -739,6 +830,7 @@ body.open #site{
     color:rgba(255,255,255,.025);
 }
 
+
 /* ================================
    PARTICLES
 ================================ */
@@ -770,6 +862,7 @@ body.open #site{
         transform:translateY(-300px) scale(1.4);
     }
 }
+
 
 /* ================================
    ADMIN
@@ -848,6 +941,7 @@ body.open #site{
     line-height:1.8;
 }
 
+
 /* ================================
    RESPONSIVE
 ================================ */
@@ -901,6 +995,10 @@ body.open #site{
         grid-template-columns:1fr;
         gap:8px;
     }
+
+    .sweet-floating{
+        font-size:19px;
+    }
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -919,6 +1017,46 @@ body.open #site{
 <body>
 
 <div class="grain"></div>
+
+
+<!-- ==================================================
+     MY SWEET 🦋🦋 FLOATING WORDS
+================================================== -->
+
+<div class="sweet-floating-container">
+
+    <div class="sweet-floating"
+         style="left:4%;bottom:-10%;font-size:22px;animation-duration:15s;animation-delay:0s;">
+        My Sweet <span class="butterfly">🦋🦋</span>
+    </div>
+
+    <div class="sweet-floating"
+         style="left:28%;bottom:-15%;font-size:18px;animation-duration:19s;animation-delay:3s;">
+        My Sweet <span class="butterfly">🦋🦋</span>
+    </div>
+
+    <div class="sweet-floating"
+         style="left:55%;bottom:-12%;font-size:25px;animation-duration:17s;animation-delay:6s;">
+        My Sweet <span class="butterfly">🦋🦋</span>
+    </div>
+
+    <div class="sweet-floating"
+         style="left:76%;bottom:-18%;font-size:20px;animation-duration:21s;animation-delay:1s;">
+        My Sweet <span class="butterfly">🦋🦋</span>
+    </div>
+
+    <div class="sweet-floating"
+         style="left:14%;bottom:-20%;font-size:17px;animation-duration:23s;animation-delay:8s;">
+        My Sweet <span class="butterfly">🦋🦋</span>
+    </div>
+
+    <div class="sweet-floating"
+         style="left:67%;bottom:-25%;font-size:16px;animation-duration:18s;animation-delay:11s;">
+        My Sweet <span class="butterfly">🦋🦋</span>
+    </div>
+
+</div>
+
 
 <!-- ================================
      PASSWORD
@@ -2286,6 +2424,7 @@ function displayImage(
 
     placeholder.classList.add("hidden");
 
+
 }
 
 
@@ -2394,11 +2533,6 @@ document
 
         }
 
-        /*
-         * Video is selected, so remove any
-         * conversation photo.
-         */
-
         removeItem("vault_video_photo");
 
         displayVideo(data);
@@ -2455,11 +2589,6 @@ document
             return;
 
         }
-
-        /*
-         * Photo is selected, so remove the
-         * previous conversation video.
-         */
 
         removeItem("vault_video");
 
