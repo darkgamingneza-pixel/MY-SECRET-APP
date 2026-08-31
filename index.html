@@ -564,7 +564,7 @@ body.open #site{
 }
 
 /* ================================
-   VIDEO
+   VIDEO / MEDIA
 ================================ */
 
 .video-box{
@@ -581,12 +581,22 @@ body.open #site{
     background:black;
 }
 
+.video-box img{
+    width:100%;
+    max-height:75vh;
+    display:block;
+    object-fit:contain;
+    background:black;
+}
+
 .video-empty{
     min-height:400px;
     display:grid;
     place-items:center;
     color:#444;
     font:10px "DM Mono",monospace;
+    letter-spacing:.12em;
+    text-align:center;
 }
 
 /* ================================
@@ -1217,7 +1227,7 @@ body.open #site{
     </section>
 
 
-    <!-- SCENE 05 VIDEO -->
+    <!-- SCENE 05 VIDEO / PHOTO -->
 
     <section class="scene">
 
@@ -1238,7 +1248,7 @@ body.open #site{
                     class="video-empty"
                     id="videoEmpty"
                 >
-                    CHAT VIDEO WILL APPEAR HERE
+                    CHAT VIDEO OR PHOTO WILL APPEAR HERE
                 </div>
 
                 <video
@@ -1248,6 +1258,12 @@ body.open #site{
                     playsinline
                     preload="metadata"
                 ></video>
+
+                <img
+                    id="chatPhoto"
+                    class="hidden"
+                    alt="Conversation memory"
+                >
 
             </div>
 
@@ -1613,12 +1629,12 @@ body.open #site{
         </div>
 
 
-        <!-- VIDEO -->
+        <!-- VIDEO / PHOTO -->
 
         <div class="admin-card">
 
             <h3>
-                Conversation Video
+                Conversation Memory
             </h3>
 
             <div class="upload-row">
@@ -1633,6 +1649,27 @@ body.open #site{
                     accept="video/*"
                 >
 
+            </div>
+
+            <div class="upload-row">
+
+                <label>
+                    CHAT PHOTO
+                </label>
+
+                <input
+                    type="file"
+                    id="uploadVideoPhoto"
+                    accept="image/*"
+                >
+
+            </div>
+
+            <div
+                id="mediaStatus"
+                class="admin-status"
+            >
+                No conversation media selected.
             </div>
 
         </div>
@@ -1914,13 +1951,6 @@ firstForm.addEventListener(
             }
         );
 
-
-        /*
-         * The password submission itself is
-         * a user interaction, so many mobile
-         * browsers will permit the soundtrack.
-         */
-
         if(music.src){
 
             const played =
@@ -2124,12 +2154,6 @@ async function uploadPhoto(
 
             }
 
-            /*
-             * Resize images before storing.
-             * This greatly improves localStorage
-             * compatibility on phones.
-             */
-
             const data =
                 await resizeImage(file,1400,.88);
 
@@ -2329,7 +2353,7 @@ loadPhotos();
 
 
 /* ==================================
-   VIDEO UPLOAD
+   CONVERSATION VIDEO UPLOAD
 ================================== */
 
 document
@@ -2351,12 +2375,6 @@ document
 
         }
 
-        /*
-         * Video files can be too large for
-         * localStorage. We still attempt it
-         * for small demo videos.
-         */
-
         const data =
             await readFile(file);
 
@@ -2369,26 +2387,113 @@ document
         if(!saved){
 
             alert(
-                "This video is too large for browser storage. For the final hosted version, use Supabase Storage."
+                "This video is too large for browser storage. For a final hosted version, use Supabase Storage."
             );
 
             return;
 
         }
 
+        /*
+         * Video is selected, so remove any
+         * conversation photo.
+         */
+
+        removeItem("vault_video_photo");
+
         displayVideo(data);
+
+        document
+            .getElementById("mediaStatus")
+            .textContent =
+                "VIDEO READY · " + file.name;
+
+        alert("Conversation video saved.");
 
     }
 );
 
+
+/* ==================================
+   CONVERSATION PHOTO UPLOAD
+================================== */
+
+document
+.getElementById("uploadVideoPhoto")
+.addEventListener(
+    "change",
+    async function(){
+
+        const file =
+            this.files[0];
+
+        if(!file) return;
+
+        if(!file.type.startsWith("image/")){
+
+            alert("Please select an image.");
+
+            return;
+
+        }
+
+        const data =
+            await resizeImage(file,1600,.90);
+
+        const saved =
+            setItem(
+                "vault_video_photo",
+                data
+            );
+
+        if(!saved){
+
+            alert(
+                "This photo is too large for browser storage. Please use a smaller photo."
+            );
+
+            return;
+
+        }
+
+        /*
+         * Photo is selected, so remove the
+         * previous conversation video.
+         */
+
+        removeItem("vault_video");
+
+        displayChatPhoto(data);
+
+        document
+            .getElementById("mediaStatus")
+            .textContent =
+                "PHOTO READY · " + file.name;
+
+        alert("Conversation photo saved.");
+
+    }
+);
+
+
+/* ==================================
+   DISPLAY VIDEO
+================================== */
 
 function displayVideo(data){
 
     const video =
         document.getElementById("chatVideo");
 
+    const photo =
+        document.getElementById("chatPhoto");
+
     const empty =
         document.getElementById("videoEmpty");
+
+    photo.classList.add("hidden");
+
+    photo.removeAttribute("src");
 
     video.src = data;
 
@@ -2399,11 +2504,64 @@ function displayVideo(data){
 }
 
 
+/* ==================================
+   DISPLAY CHAT PHOTO
+================================== */
+
+function displayChatPhoto(data){
+
+    const video =
+        document.getElementById("chatVideo");
+
+    const photo =
+        document.getElementById("chatPhoto");
+
+    const empty =
+        document.getElementById("videoEmpty");
+
+    video.pause();
+
+    video.removeAttribute("src");
+
+    video.classList.add("hidden");
+
+    photo.src = data;
+
+    photo.classList.remove("hidden");
+
+    empty.classList.add("hidden");
+
+}
+
+
+/* ==================================
+   LOAD CONVERSATION MEDIA
+================================== */
+
 const savedVideo =
     getItem("vault_video");
 
+const savedChatPhoto =
+    getItem("vault_video_photo");
+
 if(savedVideo){
+
     displayVideo(savedVideo);
+
+    document
+        .getElementById("mediaStatus")
+        .textContent =
+            "VIDEO READY";
+
+}else if(savedChatPhoto){
+
+    displayChatPhoto(savedChatPhoto);
+
+    document
+        .getElementById("mediaStatus")
+        .textContent =
+            "PHOTO READY";
+
 }
 
 
@@ -2429,11 +2587,6 @@ document
             return;
 
         }
-
-        /*
-         * Audio is stored as Base64 for the
-         * single-file demo.
-         */
 
         const data =
             await readFile(file);
@@ -2543,12 +2696,6 @@ finalForm.addEventListener(
         }
 
         finalError.textContent = "";
-
-        /*
-         * Stop music before final cinematic
-         * moment so the soundtrack can continue
-         * naturally if desired.
-         */
 
         document
             .getElementById("site")
