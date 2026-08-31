@@ -3,18 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080609">
 
-<title>Just For You ❤️</title>
+<title>My Sweet 🦋🦋</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@400;500;600&display=swap" rel="stylesheet">
-
-<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 
 <style>
 
@@ -25,15 +24,18 @@
 }
 
 :root{
-    --bg:#070607;
-    --white:#faf8f5;
-    --soft:#aaa5a5;
-    --muted:#666164;
-    --pink:#e9b9c9;
-    --line:rgba(255,255,255,.11);
+    --bg:#050304;
+    --card:rgba(255,255,255,.055);
+    --line:rgba(255,255,255,.13);
+    --white:#fffafc;
+    --soft:#d7cdd1;
+    --muted:#91878c;
+    --pink:#ffb8d2;
+    --pink2:#ff77ad;
 }
 
-html,body{
+html,
+body{
     width:100%;
     height:100%;
 }
@@ -45,7 +47,52 @@ body{
     overflow:hidden;
 }
 
-/* GRAIN */
+/* =========================
+   BACKGROUND
+========================= */
+
+.background{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.glow{
+    position:absolute;
+    width:65vw;
+    height:65vw;
+    max-width:650px;
+    max-height:650px;
+    border-radius:50%;
+    filter:blur(90px);
+    opacity:.22;
+}
+
+.glow.one{
+    background:#b62f68;
+    top:-25%;
+    left:-20%;
+}
+
+.glow.two{
+    background:#682e70;
+    bottom:-25%;
+    right:-20%;
+}
+
+.glow.three{
+    background:#d65c8e;
+    width:280px;
+    height:280px;
+    top:35%;
+    left:45%;
+    opacity:.08;
+}
+
+/* =========================
+   GRAIN
+========================= */
 
 .grain{
     position:fixed;
@@ -53,7 +100,7 @@ body{
     width:200%;
     height:200%;
     pointer-events:none;
-    z-index:20;
+    z-index:100;
     opacity:.035;
 
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -69,382 +116,534 @@ body{
     100%{transform:translate(-2%,-2%)}
 }
 
-/* BACKGROUND */
+/* =========================
+   FLOATING HEARTS
+========================= */
 
-.background{
+.hearts{
     position:fixed;
     inset:0;
+    pointer-events:none;
     overflow:hidden;
 }
 
-.orb{
+.heart{
     position:absolute;
-    width:420px;
-    height:420px;
-    border-radius:50%;
-    filter:blur(80px);
-    opacity:.18;
+    bottom:-40px;
+    color:rgba(255,170,201,.7);
+    font-size:14px;
+    animation:floatHeart linear infinite;
+    opacity:0;
 }
 
-.orb.one{
-    background:#b36b86;
-    top:-180px;
-    left:-160px;
-}
+@keyframes floatHeart{
 
-.orb.two{
-    background:#704c72;
-    right:-180px;
-    bottom:-180px;
-}
-
-.ring{
-    position:absolute;
-    width:min(100vw,700px);
-    aspect-ratio:1;
-    border:1px solid rgba(255,255,255,.055);
-    border-radius:50%;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-    animation:rotate 35s linear infinite;
-}
-
-.ring:before,
-.ring:after{
-    content:"";
-    position:absolute;
-    border:1px solid rgba(255,255,255,.035);
-    border-radius:50%;
-}
-
-.ring:before{
-    inset:12%;
-}
-
-.ring:after{
-    inset:27%;
-}
-
-@keyframes rotate{
-    to{
-        transform:translate(-50%,-50%) rotate(360deg);
+    0%{
+        transform:translateY(0) scale(.6) rotate(0deg);
+        opacity:0;
     }
+
+    15%{
+        opacity:.8;
+    }
+
+    85%{
+        opacity:.35;
+    }
+
+    100%{
+        transform:translateY(-115vh) scale(1.4) rotate(25deg);
+        opacity:0;
+    }
+
 }
 
-/* MAIN */
+/* =========================
+   MAIN
+========================= */
 
 .page{
     position:relative;
     z-index:5;
     width:100%;
     height:100svh;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
-    padding:25px;
+    padding:20px;
 }
 
 .card{
-    width:min(650px,100%);
-    text-align:center;
-    position:relative;
-}
+    width:min(520px,100%);
+    max-height:calc(100svh - 40px);
 
-/* TOP */
+    padding:38px 30px 30px;
 
-.eyebrow{
-    font:10px "DM Mono",monospace;
-    letter-spacing:.32em;
-    color:#777176;
-    text-transform:uppercase;
-    margin-bottom:28px;
-}
-
-.little-heart{
-    width:58px;
-    height:58px;
+    background:rgba(10,7,9,.67);
     border:1px solid var(--line);
+    border-radius:30px;
+
+    backdrop-filter:blur(30px);
+    -webkit-backdrop-filter:blur(30px);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.55),
+        inset 0 1px rgba(255,255,255,.06);
+
+    text-align:center;
+
+    position:relative;
+    overflow:hidden;
+}
+
+.card:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.07),
+            transparent 30%,
+            transparent 70%,
+            rgba(255,130,175,.04)
+        );
+    pointer-events:none;
+}
+
+/* =========================
+   BUTTERFLY
+========================= */
+
+.butterfly{
+    width:74px;
+    height:74px;
+    margin:0 auto 23px;
+
+    border:1px solid rgba(255,190,215,.22);
     border-radius:50%;
 
     display:grid;
     place-items:center;
 
-    margin:0 auto 28px;
+    position:relative;
 
-    animation:pulse 2.5s ease-in-out infinite;
+    box-shadow:
+        0 0 40px rgba(255,120,170,.12);
+
+    animation:butterflyFloat 4s ease-in-out infinite;
 }
 
-.little-heart svg{
-    width:21px;
-    color:var(--pink);
+.butterfly span{
+    font-size:30px;
 }
 
-@keyframes pulse{
+@keyframes butterflyFloat{
     0%,100%{
-        transform:scale(1);
-        box-shadow:0 0 0 rgba(233,185,201,0);
+        transform:translateY(0) rotate(-2deg);
     }
 
     50%{
-        transform:scale(1.06);
-        box-shadow:0 0 40px rgba(233,185,201,.08);
+        transform:translateY(-7px) rotate(2deg);
     }
 }
 
-/* QUESTION */
+/* =========================
+   LABEL
+========================= */
+
+.label{
+    font:9px "DM Mono",monospace;
+    letter-spacing:.3em;
+    color:#a89ba1;
+    text-transform:uppercase;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.title{
+    font:500 clamp(48px,14vw,76px) "Playfair Display",serif;
+    line-height:.86;
+    letter-spacing:-.06em;
+    margin:23px 0 17px;
+}
+
+.title em{
+    font-style:italic;
+    color:#f4b6cc;
+}
+
+/* =========================
+   QUESTION
+========================= */
 
 .question{
-    font:500 clamp(43px,10vw,78px) "Playfair Display",serif;
-    line-height:.95;
-    letter-spacing:-.055em;
+    color:#ded5da;
+    font-size:15px;
+    line-height:1.8;
+    max-width:420px;
+    margin:0 auto 25px;
 }
 
-.question em{
-    font-style:italic;
-    color:#cdb6bf;
+.question strong{
+    color:white;
+    font-weight:500;
 }
 
-.sub{
-    max-width:440px;
-    margin:25px auto 0;
-
-    color:#777176;
-    font-size:12px;
-    line-height:1.9;
-}
-
-/* FORM */
+/* =========================
+   FORM
+========================= */
 
 .form{
-    margin:35px auto 0;
-    width:min(520px,100%);
+    text-align:left;
+}
+
+.field{
+    margin-top:13px;
+}
+
+.field-label{
+    display:block;
+    font:9px "DM Mono",monospace;
+    letter-spacing:.18em;
+    color:#84777e;
+    margin:0 0 8px 5px;
+    text-transform:uppercase;
 }
 
 textarea,
 input{
     width:100%;
+    border:1px solid rgba(255,255,255,.11);
     outline:none;
-    border:1px solid var(--line);
-    background:rgba(255,255,255,.025);
+
+    background:rgba(255,255,255,.045);
+
     color:white;
+
+    border-radius:15px;
+
+    padding:14px 15px;
+
+    font-family:Manrope,sans-serif;
+    font-size:13px;
 
     transition:.3s;
 }
 
 textarea{
-    min-height:125px;
     resize:none;
-
-    padding:18px;
-
-    font:14px Manrope,sans-serif;
-    line-height:1.7;
-
-    border-radius:16px;
+    height:83px;
 }
 
-input{
-    height:58px;
-    padding:0 18px;
-
-    font:12px "DM Mono",monospace;
-
-    border-radius:12px;
+textarea::placeholder,
+input::placeholder{
+    color:#665d62;
 }
 
 textarea:focus,
 input:focus{
-    border-color:rgba(233,185,201,.55);
-    background:rgba(255,255,255,.045);
-    box-shadow:0 0 30px rgba(233,185,201,.05);
+    border-color:rgba(255,170,200,.45);
+
+    background:rgba(255,255,255,.065);
+
+    box-shadow:
+        0 0 0 3px rgba(255,150,190,.05),
+        0 0 35px rgba(255,90,150,.07);
 }
 
+/* =========================
+   PASSWORD
+========================= */
+
 .password-wrap{
-    margin-top:12px;
     position:relative;
 }
 
 .password-wrap input{
-    padding-right:55px;
+    padding-right:50px;
 }
 
-.show-password{
+.toggle{
     position:absolute;
-    right:0;
-    top:0;
+    right:8px;
+    top:50%;
+    transform:translateY(-50%);
 
-    width:55px;
-    height:58px;
+    width:35px;
+    height:35px;
 
     border:0;
     background:none;
-    color:#777;
+    color:#887d83;
 
     display:grid;
     place-items:center;
 }
 
-.show-password svg{
-    width:17px;
+.toggle svg{
+    width:16px;
 }
 
-/* BUTTON */
+/* =========================
+   BUTTON
+========================= */
 
 .submit{
     width:100%;
-    height:60px;
+    margin-top:18px;
 
-    margin-top:13px;
+    border:1px solid rgba(255,190,215,.28);
 
-    border:0;
-    border-radius:12px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,185,211,.95),
+            rgba(255,113,167,.9)
+        );
 
-    background:#f4eef0;
-    color:#100c0e;
+    color:#18080f;
 
-    font:500 10px "DM Mono",monospace;
+    border-radius:15px;
+
+    padding:16px;
+
+    font:600 10px "DM Mono",monospace;
     letter-spacing:.2em;
+    text-transform:uppercase;
 
-    transition:.35s;
+    box-shadow:
+        0 10px 40px rgba(255,90,150,.18);
+
+    transition:.3s;
 }
 
 .submit:hover{
     transform:translateY(-2px);
-    background:white;
+
+    box-shadow:
+        0 15px 45px rgba(255,90,150,.28);
+}
+
+.submit:active{
+    transform:scale(.98);
 }
 
 .submit:disabled{
-    opacity:.5;
-    transform:none;
+    opacity:.55;
 }
 
-/* STATUS */
+/* =========================
+   BOTTOM
+========================= */
 
-.status{
-    min-height:23px;
-    margin-top:12px;
+.bottom{
+    margin-top:18px;
 
-    font:9px "DM Mono",monospace;
-    letter-spacing:.1em;
+    color:#62595e;
 
-    color:#81777c;
+    font:8px "DM Mono",monospace;
+
+    letter-spacing:.15em;
+
+    text-transform:uppercase;
 }
 
-.status.error{
-    color:#d19aaa;
+/* =========================
+   SUCCESS
+========================= */
+
+.success{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:30px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(100,25,58,.25),
+            rgba(5,3,4,.97) 70%
+        );
+
+    opacity:0;
+    pointer-events:none;
+
+    transition:.6s;
 }
 
-.status.success{
-    color:#bcd0c1;
+.success.show{
+    opacity:1;
+    pointer-events:auto;
 }
 
-/* SUCCESS */
-
-.success-screen{
-    display:none;
+.success-inner{
+    max-width:420px;
 }
 
 .success-heart{
-    font-size:70px;
-    line-height:1;
+    font-size:60px;
 
-    margin-bottom:25px;
-
-    animation:heartbeat 1.5s infinite;
+    animation:
+        heartbeat 1.4s ease-in-out infinite;
 }
 
 @keyframes heartbeat{
-    0%,100%{transform:scale(1)}
-    15%{transform:scale(1.12)}
-    30%{transform:scale(1)}
-    45%{transform:scale(1.08)}
-}
-
-.success-title{
-    font:500 clamp(55px,13vw,95px) "Playfair Display",serif;
-    line-height:.8;
-    letter-spacing:-.06em;
-}
-
-.success-title em{
-    color:#d4b8c1;
-}
-
-.success-copy{
-    max-width:430px;
-    margin:30px auto 0;
-
-    color:#888084;
-    font-size:13px;
-    line-height:2;
-}
-
-/* FLOATING HEARTS */
-
-.floating{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:3;
-}
-
-.heart{
-    position:absolute;
-    color:rgba(235,190,205,.22);
-    font-size:14px;
-
-    animation:float 8s linear infinite;
-}
-
-@keyframes float{
-
-    0%{
-        opacity:0;
-        transform:translateY(30px) scale(.6) rotate(0);
+    0%,100%{
+        transform:scale(1);
     }
 
     20%{
-        opacity:1;
+        transform:scale(1.16);
     }
 
-    80%{
-        opacity:.5;
+    35%{
+        transform:scale(1);
     }
 
-    100%{
-        opacity:0;
-        transform:translateY(-110vh) scale(1.2) rotate(25deg);
+    50%{
+        transform:scale(1.1);
     }
 }
 
-/* MOBILE */
+.success-title{
+    font:500 55px "Playfair Display",serif;
+    margin:22px 0 15px;
+}
 
-@media(max-width:600px){
+.success-title em{
+    color:#f3a9c5;
+}
+
+.success-text{
+    color:#9b9096;
+    font-size:13px;
+    line-height:1.9;
+}
+
+.success-small{
+    margin-top:24px;
+    color:#665c61;
+    font:9px "DM Mono",monospace;
+    letter-spacing:.16em;
+}
+
+/* =========================
+   CONFETTI
+========================= */
+
+.confetti{
+    position:fixed;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:50;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:500px){
 
     .page{
-        padding:20px;
+        padding:14px;
+    }
+
+    .card{
+        padding:29px 20px 22px;
+        border-radius:26px;
+    }
+
+    .butterfly{
+        width:62px;
+        height:62px;
+        margin-bottom:18px;
+    }
+
+    .butterfly span{
+        font-size:25px;
+    }
+
+    .title{
+        font-size:52px;
+        margin:19px 0 13px;
     }
 
     .question{
-        font-size:46px;
-    }
-
-    .sub{
-        font-size:11px;
-        max-width:330px;
+        font-size:13px;
+        line-height:1.7;
+        margin-bottom:17px;
     }
 
     textarea{
-        min-height:115px;
+        height:70px;
     }
 
-    .ring{
-        width:125vw;
+    .field{
+        margin-top:10px;
     }
 
+    .submit{
+        margin-top:14px;
+        padding:14px;
+    }
+
+    .bottom{
+        margin-top:13px;
+    }
+}
+
+@media(max-height:650px){
+
+    .card{
+        padding-top:20px;
+        padding-bottom:17px;
+    }
+
+    .butterfly{
+        width:52px;
+        height:52px;
+        margin-bottom:12px;
+    }
+
+    .butterfly span{
+        font-size:22px;
+    }
+
+    .title{
+        font-size:43px;
+        margin:13px 0 10px;
+    }
+
+    .question{
+        margin-bottom:12px;
+        font-size:12px;
+    }
+
+    textarea{
+        height:60px;
+    }
+
+    .field{
+        margin-top:7px;
+    }
+
+    .submit{
+        margin-top:10px;
+        padding:12px;
+    }
+
+    .bottom{
+        margin-top:9px;
+    }
 }
 
 </style>
@@ -452,68 +651,81 @@ input:focus{
 
 <body>
 
-<div class="grain"></div>
-
 <div class="background">
-    <div class="orb one"></div>
-    <div class="orb two"></div>
-    <div class="ring"></div>
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+    <div class="glow three"></div>
 </div>
 
-<div class="floating" id="floating"></div>
+<div class="hearts" id="hearts"></div>
+
+<div class="grain"></div>
 
 
 <main class="page">
 
-    <div class="card">
+    <section class="card">
 
-        <!-- QUESTION SCREEN -->
+        <div class="butterfly">
+            <span>🦋</span>
+        </div>
 
-        <div id="questionScreen">
+        <div class="label">
+            A little question for you
+        </div>
 
-            <div class="little-heart">
-                <i data-lucide="heart"></i>
-            </div>
+        <h1 class="title">
+            My Sweet<br>
+            <em>🦋🦋</em>
+        </h1>
 
-            <div class="eyebrow">
-                JUST BETWEEN US · ❤️
-            </div>
+        <p class="question">
+            There is something I really want to know...
+            <br>
+            <strong>If you could tell me one thing from your heart,
+            what would it be?</strong>
+        </p>
 
-            <h1 class="question">
-                Can you answer<br>
-                one thing for <em>me?</em>
-            </h1>
 
-            <p class="sub">
-                Don't overthink it.
-                Just tell me what's in your heart.
-                And maybe leave something behind
-                that only you and I will know.
-            </p>
+        <form class="form" id="answerForm">
 
-            <form class="form" id="loveForm">
+            <div class="field">
+
+                <label class="field-label">
+                    Your answer
+                </label>
 
                 <textarea
                     id="answer"
-                    maxlength="2000"
-                    placeholder="Write your answer here..."
+                    maxlength="1000"
+                    placeholder="Tell me what your heart wants to say..."
                     required
                 ></textarea>
+
+            </div>
+
+
+            <div class="field">
+
+                <label class="field-label">
+                    Create a little password
+                </label>
 
                 <div class="password-wrap">
 
                     <input
                         id="herPassword"
                         type="password"
-                        maxlength="100"
-                        placeholder="Create a little secret password"
+                        minlength="4"
+                        maxlength="50"
+                        placeholder="Something only you know..."
                         required
                     >
 
                     <button
                         type="button"
-                        class="show-password"
-                        id="showPassword"
+                        class="toggle"
+                        id="togglePassword"
                         aria-label="Show password"
                     >
                         <i data-lucide="eye"></i>
@@ -521,54 +733,52 @@ input:focus{
 
                 </div>
 
-                <button
-                    class="submit"
-                    id="submitButton"
-                    type="submit"
-                >
-                    LEAVE IT WITH ME ❤️
-                </button>
+            </div>
 
-                <div
-                    class="status"
-                    id="status"
-                ></div>
 
-            </form>
+            <button
+                class="submit"
+                id="submitButton"
+                type="submit"
+            >
+                Send it to me ❤️
+            </button>
 
+        </form>
+
+
+        <div class="bottom">
+            Made with a little love · just for you
         </div>
 
 
-        <!-- SUCCESS SCREEN -->
+        <div class="success" id="success">
 
-        <div
-            id="successScreen"
-            class="success-screen"
-        >
+            <div class="success-inner">
 
-            <div class="success-heart">
-                ❤️
+                <div class="success-heart">
+                    ❤️
+                </div>
+
+                <h2 class="success-title">
+                    It's <em>safe.</em>
+                </h2>
+
+                <p class="success-text">
+                    Your answer has been kept safely.
+                    And now there is one little secret
+                    between us.
+                </p>
+
+                <div class="success-small">
+                    YOU CAN TELL HIM YOUR PASSWORD NOW 🦋
+                </div>
+
             </div>
-
-            <div class="eyebrow">
-                ANSWER RECEIVED
-            </div>
-
-            <h2 class="success-title">
-                I got<br>
-                <em>your heart.</em>
-            </h2>
-
-            <p class="success-copy">
-                Your words are safely with me now.
-                Keep the little password you created close.
-                Some things are more beautiful
-                when they're just ours.
-            </p>
 
         </div>
 
-    </div>
+    </section>
 
 </main>
 
@@ -585,18 +795,14 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_eyWrxI_zuO7n6M3KNEAbNQ_38qXJuIx";
 
-const supabaseClient =
-    window.supabase.createClient(
+const { createClient } =
+    supabase;
+
+const db =
+    createClient(
         SUPABASE_URL,
         SUPABASE_KEY
     );
-
-
-/* =========================================
-   ICONS
-========================================= */
-
-lucide.createIcons();
 
 
 /* =========================================
@@ -604,7 +810,7 @@ lucide.createIcons();
 ========================================= */
 
 const form =
-    document.getElementById("loveForm");
+    document.getElementById("answerForm");
 
 const answer =
     document.getElementById("answer");
@@ -615,42 +821,38 @@ const herPassword =
 const submitButton =
     document.getElementById("submitButton");
 
-const status =
-    document.getElementById("status");
+const success =
+    document.getElementById("success");
 
-const questionScreen =
-    document.getElementById("questionScreen");
-
-const successScreen =
-    document.getElementById("successScreen");
-
-const showPassword =
-    document.getElementById("showPassword");
+const togglePassword =
+    document.getElementById("togglePassword");
 
 
 /* =========================================
-   SHOW / HIDE PASSWORD
+   ICONS
 ========================================= */
 
-showPassword.addEventListener(
+lucide.createIcons();
+
+
+/* =========================================
+   PASSWORD VISIBILITY
+========================================= */
+
+togglePassword.addEventListener(
     "click",
     function(){
 
-        if(herPassword.type === "password"){
+        const showing =
+            herPassword.type === "text";
 
-            herPassword.type = "text";
+        herPassword.type =
+            showing ? "password" : "text";
 
-            showPassword.innerHTML =
-                '<i data-lucide="eye-off"></i>';
-
-        }else{
-
-            herPassword.type = "password";
-
-            showPassword.innerHTML =
-                '<i data-lucide="eye"></i>';
-
-        }
+        togglePassword.innerHTML =
+            showing
+            ? '<i data-lucide="eye"></i>'
+            : '<i data-lucide="eye-off"></i>';
 
         lucide.createIcons();
 
@@ -659,7 +861,49 @@ showPassword.addEventListener(
 
 
 /* =========================================
-   SUBMIT ANSWER
+   CREATE FLOATING HEARTS
+========================================= */
+
+const hearts =
+    document.getElementById("hearts");
+
+const heartSymbols =
+    ["♡","♥","❤","🦋"];
+
+for(let i=0;i<24;i++){
+
+    const heart =
+        document.createElement("span");
+
+    heart.className =
+        "heart";
+
+    heart.textContent =
+        heartSymbols[
+            Math.floor(
+                Math.random()*heartSymbols.length
+            )
+        ];
+
+    heart.style.left =
+        Math.random()*100 + "%";
+
+    heart.style.fontSize =
+        (8 + Math.random()*14) + "px";
+
+    heart.style.animationDuration =
+        (7 + Math.random()*10) + "s";
+
+    heart.style.animationDelay =
+        (-Math.random()*15) + "s";
+
+    hearts.appendChild(heart);
+
+}
+
+
+/* =========================================
+   SUBMIT
 ========================================= */
 
 form.addEventListener(
@@ -668,31 +912,30 @@ form.addEventListener(
 
         e.preventDefault();
 
+
         const answerValue =
             answer.value.trim();
 
         const passwordValue =
             herPassword.value.trim();
 
-        if(!answerValue){
 
-            status.textContent =
-                "WRITE SOMETHING FOR ME ❤️";
+        if(answerValue.length < 1){
 
-            status.className =
-                "status error";
+            answer.focus();
 
             return;
 
         }
 
-        if(!passwordValue){
 
-            status.textContent =
-                "CREATE YOUR LITTLE PASSWORD";
+        if(passwordValue.length < 4){
 
-            status.className =
-                "status error";
+            herPassword.focus();
+
+            alert(
+                "Please create a password with at least 4 characters."
+            );
 
             return;
 
@@ -702,29 +945,29 @@ form.addEventListener(
         submitButton.disabled = true;
 
         submitButton.textContent =
-            "SAVING YOUR WORDS...";
-
-        status.textContent =
-            "";
+            "SENDING WITH LOVE... ❤️";
 
 
         try{
 
             const { data, error } =
-                await supabaseClient
-                    .from("love_answers")
-                    .insert([
-                        {
-                            answer: answerValue,
-                            her_password: passwordValue
-                        }
-                    ])
-                    .select();
+                await db
+                .from("love_answers")
+                .insert([
+                    {
+                        answer: answerValue,
+                        her_password: passwordValue
+                    }
+                ])
+                .select();
 
 
             if(error){
 
-                console.error(error);
+                console.error(
+                    "Supabase error:",
+                    error
+                );
 
                 throw error;
 
@@ -733,47 +976,72 @@ form.addEventListener(
 
             /* SUCCESS */
 
-            questionScreen.style.display =
-                "none";
+            form.style.opacity = "0";
+            form.style.transform =
+                "translateY(10px)";
 
-            successScreen.style.display =
-                "block";
-
-
-            /* SUCCESS ANIMATION */
-
-            successScreen.animate(
-                [
-                    {
-                        opacity:0,
-                        transform:"translateY(30px) scale(.97)"
-                    },
-                    {
-                        opacity:1,
-                        transform:"translateY(0) scale(1)"
-                    }
-                ],
+            gsap.to(
+                ".form",
                 {
-                    duration:1000,
-                    easing:"cubic-bezier(.16,1,.3,1)",
-                    fill:"forwards"
+                    opacity:0,
+                    y:10,
+                    duration:.45
                 }
+            );
+
+
+            setTimeout(
+                function(){
+
+                    success.classList.add("show");
+
+                    createConfetti();
+
+                    gsap.fromTo(
+                        ".success-inner",
+                        {
+                            opacity:0,
+                            y:30,
+                            scale:.96
+                        },
+                        {
+                            opacity:1,
+                            y:0,
+                            scale:1,
+                            duration:1,
+                            ease:"power3.out"
+                        }
+                    );
+
+                },
+                350
             );
 
 
         }catch(error){
 
-            status.textContent =
-                "SOMETHING WENT WRONG · PLEASE TRY AGAIN";
-
-            status.className =
-                "status error";
-
             submitButton.disabled =
                 false;
 
             submitButton.textContent =
-                "LEAVE IT WITH ME ❤️";
+                "Send it to me ❤️";
+
+
+            let message =
+                "Something went wrong. Please try again.";
+
+
+            if(error && error.message){
+
+                message =
+                    "Could not save your answer.\n\n"
+                    +
+                    error.message;
+
+            }
+
+
+            alert(message);
 
         }
 
@@ -782,47 +1050,72 @@ form.addEventListener(
 
 
 /* =========================================
-   FLOATING HEARTS
+   CONFETTI
 ========================================= */
 
-function createHearts(){
+function createConfetti(){
 
-    const container =
-        document.getElementById("floating");
+    for(let i=0;i<45;i++){
 
-    for(let i=0;i<28;i++){
-
-        const heart =
+        const piece =
             document.createElement("span");
 
-        heart.className =
-            "heart";
+        piece.className =
+            "confetti";
 
-        heart.textContent =
-            Math.random() > .5 ? "♡" : "♥";
+        piece.textContent =
+            Math.random() > .5
+            ? "♥"
+            : "✦";
 
-        heart.style.left =
-            Math.random()*100 + "%";
+        piece.style.left =
+            "50%";
 
-        heart.style.top =
-            (70 + Math.random()*40) + "%";
+        piece.style.top =
+            "50%";
 
-        heart.style.fontSize =
-            (8 + Math.random()*15) + "px";
+        piece.style.fontSize =
+            (8 + Math.random()*13) + "px";
 
-        heart.style.animationDuration =
-            (7 + Math.random()*8) + "s";
+        piece.style.color =
+            "rgba(255,180,210,.9)";
 
-        heart.style.animationDelay =
-            (-Math.random()*12) + "s";
+        document.body.appendChild(piece);
 
-        container.appendChild(heart);
+
+        const angle =
+            Math.random()*Math.PI*2;
+
+        const distance =
+            100 + Math.random()*280;
+
+        const x =
+            Math.cos(angle)*distance;
+
+        const y =
+            Math.sin(angle)*distance;
+
+
+        gsap.to(
+            piece,
+            {
+                x:x,
+                y:y,
+                rotation:
+                    Math.random()*720-360,
+                opacity:0,
+                duration:
+                    1.5+Math.random()*1.2,
+                ease:"power2.out",
+                onComplete:()=>{
+                    piece.remove();
+                }
+            }
+        );
 
     }
 
 }
-
-createHearts();
 
 </script>
 
