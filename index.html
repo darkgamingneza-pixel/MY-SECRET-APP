@@ -2,106 +2,50 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080609">
 
-<title>My Sweet 🦋🦋</title>
+<title>Just For You ❤️</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@400;500;600&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
 :root{
-    --bg:#050505;
-    --white:#fff;
-    --soft:#dedbd5;
-    --muted:#898781;
-    --pink:#ffb7d5;
-    --pink2:#ff79ae;
-    --glass:rgba(255,255,255,.055);
-    --line:rgba(255,255,255,.12);
+    --bg:#070607;
+    --white:#faf8f5;
+    --soft:#aaa5a5;
+    --muted:#666164;
+    --pink:#e9b9c9;
+    --line:rgba(255,255,255,.11);
 }
 
-html,
-body{
+html,body{
     width:100%;
     height:100%;
-    overflow:hidden;
 }
 
 body{
     background:var(--bg);
-    color:white;
+    color:var(--white);
     font-family:Manrope,sans-serif;
-}
-
-/* =================================
-   BACKGROUND
-================================= */
-
-.background{
-    position:fixed;
-    inset:0;
     overflow:hidden;
-    background:
-        radial-gradient(
-            circle at 50% 35%,
-            rgba(255,120,175,.12),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 15% 85%,
-            rgba(255,180,210,.07),
-            transparent 25%
-        ),
-        radial-gradient(
-            circle at 85% 15%,
-            rgba(255,255,255,.05),
-            transparent 22%
-        ),
-        #050505;
 }
 
-.glow{
-    position:absolute;
-    width:55vw;
-    height:55vw;
-    max-width:700px;
-    max-height:700px;
-    border-radius:50%;
-    left:50%;
-    top:45%;
-    transform:translate(-50%,-50%);
-    background:rgba(255,100,165,.07);
-    filter:blur(100px);
-    animation:breathe 7s ease-in-out infinite;
-}
-
-@keyframes breathe{
-    0%,100%{
-        transform:translate(-50%,-50%) scale(.9);
-        opacity:.5;
-    }
-
-    50%{
-        transform:translate(-50%,-50%) scale(1.15);
-        opacity:1;
-    }
-}
-
-/* =================================
-   GRAIN
-================================= */
+/* GRAIN */
 
 .grain{
     position:fixed;
@@ -112,9 +56,7 @@ body{
     z-index:20;
     opacity:.035;
 
-    background-image:url(
-        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"
-    );
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 
     animation:grain .2s steps(2) infinite;
 }
@@ -127,135 +69,74 @@ body{
     100%{transform:translate(-2%,-2%)}
 }
 
-/* =================================
-   TOP LABEL
-================================= */
+/* BACKGROUND */
 
-.top{
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    height:75px;
-    padding:0 22px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    z-index:10;
-}
-
-.brand{
-    font:10px "DM Mono",monospace;
-    letter-spacing:.22em;
-    color:#aaa;
-}
-
-.time{
-    font:10px "DM Mono",monospace;
-    color:#777;
-}
-
-/* =================================
-   FLOATING BUTTERFLIES
-================================= */
-
-.butterflies{
+.background{
     position:fixed;
     inset:0;
     overflow:hidden;
-    pointer-events:none;
-    z-index:2;
 }
 
-.butterfly{
+.orb{
     position:absolute;
-    font-size:20px;
-    opacity:0;
-    filter:drop-shadow(0 0 10px rgba(255,150,200,.7));
-    animation:fly linear infinite;
+    width:420px;
+    height:420px;
+    border-radius:50%;
+    filter:blur(80px);
+    opacity:.18;
 }
 
-@keyframes fly{
-
-    0%{
-        opacity:0;
-        transform:
-            translateY(110vh)
-            translateX(0)
-            rotate(-15deg)
-            scale(.6);
-    }
-
-    10%{
-        opacity:.7;
-    }
-
-    50%{
-        transform:
-            translateY(45vh)
-            translateX(70px)
-            rotate(15deg)
-            scale(1);
-    }
-
-    90%{
-        opacity:.7;
-    }
-
-    100%{
-        opacity:0;
-        transform:
-            translateY(-15vh)
-            translateX(-80px)
-            rotate(-10deg)
-            scale(.7);
-    }
+.orb.one{
+    background:#b36b86;
+    top:-180px;
+    left:-160px;
 }
 
-/* =================================
-   FLOATING HEARTS
-================================= */
-
-.hearts{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    overflow:hidden;
-    z-index:1;
+.orb.two{
+    background:#704c72;
+    right:-180px;
+    bottom:-180px;
 }
 
-.heart{
+.ring{
     position:absolute;
-    color:rgba(255,180,210,.45);
-    font-size:12px;
-    animation:heartFloat linear infinite;
+    width:min(100vw,700px);
+    aspect-ratio:1;
+    border:1px solid rgba(255,255,255,.055);
+    border-radius:50%;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    animation:rotate 35s linear infinite;
 }
 
-@keyframes heartFloat{
+.ring:before,
+.ring:after{
+    content:"";
+    position:absolute;
+    border:1px solid rgba(255,255,255,.035);
+    border-radius:50%;
+}
 
-    0%{
-        transform:translateY(110vh) scale(.5);
-        opacity:0;
-    }
+.ring:before{
+    inset:12%;
+}
 
-    20%{
-        opacity:.7;
-    }
+.ring:after{
+    inset:27%;
+}
 
-    100%{
-        transform:translateY(-15vh) scale(1.4);
-        opacity:0;
+@keyframes rotate{
+    to{
+        transform:translate(-50%,-50%) rotate(360deg);
     }
 }
 
-/* =================================
-   MAIN
-================================= */
+/* MAIN */
 
-.app{
+.page{
     position:relative;
+    z-index:5;
     width:100%;
     height:100svh;
 
@@ -264,470 +145,304 @@ body{
     justify-content:center;
 
     padding:25px;
-
-    z-index:5;
 }
-
-/* =================================
-   QUESTION CARD
-================================= */
 
 .card{
-    position:relative;
-
-    width:min(570px,100%);
-
-    padding:
-        clamp(38px,8vw,70px)
-        clamp(24px,7vw,60px);
-
+    width:min(650px,100%);
     text-align:center;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.075),
-            rgba(255,255,255,.025)
-        );
-
-    border:1px solid rgba(255,255,255,.12);
-
-    border-radius:32px;
-
-    backdrop-filter:blur(30px);
-    -webkit-backdrop-filter:blur(30px);
-
-    box-shadow:
-        0 30px 100px rgba(0,0,0,.6),
-        inset 0 1px 0 rgba(255,255,255,.08);
-
-    animation:cardIn 1.3s cubic-bezier(.16,1,.3,1);
+    position:relative;
 }
 
-@keyframes cardIn{
-    from{
-        opacity:0;
-        transform:translateY(35px) scale(.96);
-        filter:blur(15px);
-    }
+/* TOP */
 
-    to{
-        opacity:1;
-        transform:none;
-        filter:blur(0);
-    }
+.eyebrow{
+    font:10px "DM Mono",monospace;
+    letter-spacing:.32em;
+    color:#777176;
+    text-transform:uppercase;
+    margin-bottom:28px;
 }
 
-/* =================================
-   BUTTERFLY ICON
-================================= */
-
-.icon{
-    width:70px;
-    height:70px;
-
-    margin:0 auto 28px;
-
+.little-heart{
+    width:58px;
+    height:58px;
+    border:1px solid var(--line);
     border-radius:50%;
 
     display:grid;
     place-items:center;
 
-    border:1px solid rgba(255,255,255,.13);
+    margin:0 auto 28px;
 
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,170,205,.13),
-            transparent 70%
-        );
-
-    box-shadow:
-        0 0 50px rgba(255,120,175,.1);
-
-    animation:iconPulse 4s ease-in-out infinite;
+    animation:pulse 2.5s ease-in-out infinite;
 }
 
-.icon span{
-    font-size:30px;
-    filter:drop-shadow(0 0 12px rgba(255,150,200,.7));
+.little-heart svg{
+    width:21px;
+    color:var(--pink);
 }
 
-@keyframes iconPulse{
+@keyframes pulse{
     0%,100%{
         transform:scale(1);
+        box-shadow:0 0 0 rgba(233,185,201,0);
     }
 
     50%{
-        transform:scale(1.08);
+        transform:scale(1.06);
+        box-shadow:0 0 40px rgba(233,185,201,.08);
     }
 }
 
-/* =================================
-   SMALL TEXT
-================================= */
-
-.eyebrow{
-    font:10px "DM Mono",monospace;
-    letter-spacing:.3em;
-    text-transform:uppercase;
-    color:#8b8986;
-    margin-bottom:22px;
-}
-
-/* =================================
-   TITLE
-================================= */
-
-.title{
-    font:
-        500
-        clamp(48px,12vw,78px)
-        "Playfair Display",
-        serif;
-
-    line-height:.9;
-    letter-spacing:-.055em;
-
-    margin-bottom:28px;
-}
-
-.title em{
-    color:var(--pink);
-    font-style:italic;
-
-    text-shadow:
-        0 0 35px rgba(255,120,175,.25);
-}
-
-/* =================================
-   QUESTION
-================================= */
+/* QUESTION */
 
 .question{
-    font:
-        400
-        clamp(18px,4vw,24px)
-        "Manrope",
-        sans-serif;
-
-    line-height:1.6;
-
-    color:#c5c3be;
-
-    max-width:430px;
-
-    margin:0 auto;
+    font:500 clamp(43px,10vw,78px) "Playfair Display",serif;
+    line-height:.95;
+    letter-spacing:-.055em;
 }
 
-.question strong{
+.question em{
+    font-style:italic;
+    color:#cdb6bf;
+}
+
+.sub{
+    max-width:440px;
+    margin:25px auto 0;
+
+    color:#777176;
+    font-size:12px;
+    line-height:1.9;
+}
+
+/* FORM */
+
+.form{
+    margin:35px auto 0;
+    width:min(520px,100%);
+}
+
+textarea,
+input{
+    width:100%;
+    outline:none;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.025);
     color:white;
-    font-weight:600;
-}
-
-/* =================================
-   BUTTON AREA
-================================= */
-
-.buttons{
-    position:relative;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:14px;
-
-    margin-top:38px;
-
-    min-height:62px;
-}
-
-/* =================================
-   BUTTONS
-================================= */
-
-.btn{
-    border:0;
-    outline:0;
-
-    min-width:145px;
-    height:58px;
-
-    border-radius:100px;
-
-    font-size:13px;
-    font-weight:700;
-
-    letter-spacing:.02em;
-
-    transition:
-        transform .35s cubic-bezier(.16,1,.3,1),
-        box-shadow .35s,
-        background .35s;
-}
-
-.yes{
-    color:#090909;
-
-    background:
-        linear-gradient(
-            135deg,
-            #fff,
-            #ffd9e8
-        );
-
-    box-shadow:
-        0 10px 35px rgba(255,160,200,.18);
-}
-
-.yes:hover{
-    transform:translateY(-4px) scale(1.04);
-
-    box-shadow:
-        0 18px 50px rgba(255,140,190,.3);
-}
-
-.no{
-    color:#aaa;
-
-    background:rgba(255,255,255,.045);
-
-    border:1px solid rgba(255,255,255,.12);
-
-    position:relative;
-}
-
-.no:hover{
-    background:rgba(255,255,255,.07);
-}
-
-/* =================================
-   LITTLE MESSAGE
-================================= */
-
-.hint{
-    margin-top:25px;
-
-    min-height:18px;
-
-    color:#686663;
-
-    font:9px "DM Mono",monospace;
-
-    letter-spacing:.12em;
-
-    text-transform:uppercase;
 
     transition:.3s;
 }
 
-/* =================================
-   FOOTER
-================================= */
+textarea{
+    min-height:125px;
+    resize:none;
 
-.footer{
-    margin-top:32px;
+    padding:18px;
+
+    font:14px Manrope,sans-serif;
+    line-height:1.7;
+
+    border-radius:16px;
+}
+
+input{
+    height:58px;
+    padding:0 18px;
+
+    font:12px "DM Mono",monospace;
+
+    border-radius:12px;
+}
+
+textarea:focus,
+input:focus{
+    border-color:rgba(233,185,201,.55);
+    background:rgba(255,255,255,.045);
+    box-shadow:0 0 30px rgba(233,185,201,.05);
+}
+
+.password-wrap{
+    margin-top:12px;
+    position:relative;
+}
+
+.password-wrap input{
+    padding-right:55px;
+}
+
+.show-password{
+    position:absolute;
+    right:0;
+    top:0;
+
+    width:55px;
+    height:58px;
+
+    border:0;
+    background:none;
+    color:#777;
+
+    display:grid;
+    place-items:center;
+}
+
+.show-password svg{
+    width:17px;
+}
+
+/* BUTTON */
+
+.submit{
+    width:100%;
+    height:60px;
+
+    margin-top:13px;
+
+    border:0;
+    border-radius:12px;
+
+    background:#f4eef0;
+    color:#100c0e;
+
+    font:500 10px "DM Mono",monospace;
+    letter-spacing:.2em;
+
+    transition:.35s;
+}
+
+.submit:hover{
+    transform:translateY(-2px);
+    background:white;
+}
+
+.submit:disabled{
+    opacity:.5;
+    transform:none;
+}
+
+/* STATUS */
+
+.status{
+    min-height:23px;
+    margin-top:12px;
 
     font:9px "DM Mono",monospace;
+    letter-spacing:.1em;
 
-    color:#555;
-
-    letter-spacing:.15em;
+    color:#81777c;
 }
 
-/* =================================
-   SUCCESS SCREEN
-================================= */
+.status.error{
+    color:#d19aaa;
+}
 
-.success{
-    position:fixed;
-    inset:0;
+.status.success{
+    color:#bcd0c1;
+}
 
-    z-index:50;
+/* SUCCESS */
 
+.success-screen{
     display:none;
-
-    align-items:center;
-    justify-content:center;
-
-    text-align:center;
-
-    padding:25px;
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(255,100,165,.15),
-            transparent 35%
-        ),
-        #040404;
 }
 
-.success.show{
-    display:flex;
+.success-heart{
+    font-size:70px;
+    line-height:1;
+
+    margin-bottom:25px;
+
+    animation:heartbeat 1.5s infinite;
 }
 
-.success-inner{
-    max-width:600px;
-
-    animation:successIn 1.4s cubic-bezier(.16,1,.3,1);
-}
-
-@keyframes successIn{
-    from{
-        opacity:0;
-        transform:scale(.9) translateY(30px);
-        filter:blur(20px);
-    }
-
-    to{
-        opacity:1;
-        transform:none;
-        filter:blur(0);
-    }
-}
-
-.success-icon{
-    font-size:55px;
-
-    margin-bottom:30px;
-
-    animation:
-        butterflyDance 3s ease-in-out infinite;
-}
-
-@keyframes butterflyDance{
-    0%,100%{
-        transform:translateY(0) rotate(-5deg);
-    }
-
-    50%{
-        transform:translateY(-12px) rotate(5deg);
-    }
+@keyframes heartbeat{
+    0%,100%{transform:scale(1)}
+    15%{transform:scale(1.12)}
+    30%{transform:scale(1)}
+    45%{transform:scale(1.08)}
 }
 
 .success-title{
-    font:
-        500
-        clamp(65px,17vw,130px)
-        "Playfair Display",
-        serif;
-
-    line-height:.72;
-
-    letter-spacing:-.07em;
-
-    margin-bottom:45px;
+    font:500 clamp(55px,13vw,95px) "Playfair Display",serif;
+    line-height:.8;
+    letter-spacing:-.06em;
 }
 
 .success-title em{
-    color:var(--pink);
-    font-style:italic;
+    color:#d4b8c1;
 }
 
-.success-text{
-    color:#aaa;
+.success-copy{
+    max-width:430px;
+    margin:30px auto 0;
 
-    font-size:15px;
-
+    color:#888084;
+    font-size:13px;
     line-height:2;
-
-    max-width:500px;
-
-    margin:auto;
 }
 
-.signature{
-    margin-top:35px;
+/* FLOATING HEARTS */
 
-    font:
-        italic
-        20px
-        "Playfair Display",
-        serif;
-
-    color:#ddd;
-}
-
-/* =================================
-   CONFETTI
-================================= */
-
-.confetti{
+.floating{
     position:fixed;
-    width:6px;
-    height:6px;
-
-    border-radius:50%;
-
+    inset:0;
     pointer-events:none;
-
-    z-index:100;
-
-    animation:confetti 3s ease-out forwards;
+    z-index:3;
 }
 
-@keyframes confetti{
+.heart{
+    position:absolute;
+    color:rgba(235,190,205,.22);
+    font-size:14px;
+
+    animation:float 8s linear infinite;
+}
+
+@keyframes float{
 
     0%{
-        transform:translate(0,0) rotate(0);
+        opacity:0;
+        transform:translateY(30px) scale(.6) rotate(0);
+    }
+
+    20%{
         opacity:1;
     }
 
-    100%{
-        transform:
-            translate(
-                var(--x),
-                var(--y)
-            )
-            rotate(720deg);
+    80%{
+        opacity:.5;
+    }
 
+    100%{
         opacity:0;
+        transform:translateY(-110vh) scale(1.2) rotate(25deg);
     }
 }
 
-/* =================================
-   MOBILE
-================================= */
+/* MOBILE */
 
 @media(max-width:600px){
 
-    .top{
-        height:62px;
-        padding:0 17px;
-    }
-
-    .card{
-        border-radius:27px;
-    }
-
-    .buttons{
-        gap:10px;
-    }
-
-    .btn{
-        min-width:130px;
-    }
-
-}
-
-@media(max-width:380px){
-
-    .card{
-        padding:34px 20px;
-    }
-
-    .buttons{
-        gap:7px;
-    }
-
-    .btn{
-        min-width:120px;
-        height:54px;
+    .page{
+        padding:20px;
     }
 
     .question{
-        font-size:17px;
+        font-size:46px;
+    }
+
+    .sub{
+        font-size:11px;
+        max-width:330px;
+    }
+
+    textarea{
+        min-height:115px;
+    }
+
+    .ring{
+        width:125vw;
     }
 
 }
@@ -737,498 +452,377 @@ body{
 
 <body>
 
-<!-- BACKGROUND -->
-
-<div class="background">
-    <div class="glow"></div>
-</div>
-
 <div class="grain"></div>
 
-<div class="butterflies" id="butterflies"></div>
-
-<div class="hearts" id="hearts"></div>
-
-
-<!-- TOP -->
-
-<div class="top">
-
-    <div class="brand">
-        FOR MY SWEET 🦋🦋
-    </div>
-
-    <div class="time">
-        23:08
-    </div>
-
+<div class="background">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="ring"></div>
 </div>
 
+<div class="floating" id="floating"></div>
 
-<!-- MAIN -->
 
-<main class="app">
+<main class="page">
 
-    <section class="card" id="card">
+    <div class="card">
 
-        <div class="icon">
-            <span>🦋</span>
+        <!-- QUESTION SCREEN -->
+
+        <div id="questionScreen">
+
+            <div class="little-heart">
+                <i data-lucide="heart"></i>
+            </div>
+
+            <div class="eyebrow">
+                JUST BETWEEN US · ❤️
+            </div>
+
+            <h1 class="question">
+                Can you answer<br>
+                one thing for <em>me?</em>
+            </h1>
+
+            <p class="sub">
+                Don't overthink it.
+                Just tell me what's in your heart.
+                And maybe leave something behind
+                that only you and I will know.
+            </p>
+
+            <form class="form" id="loveForm">
+
+                <textarea
+                    id="answer"
+                    maxlength="2000"
+                    placeholder="Write your answer here..."
+                    required
+                ></textarea>
+
+                <div class="password-wrap">
+
+                    <input
+                        id="herPassword"
+                        type="password"
+                        maxlength="100"
+                        placeholder="Create a little secret password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="show-password"
+                        id="showPassword"
+                        aria-label="Show password"
+                    >
+                        <i data-lucide="eye"></i>
+                    </button>
+
+                </div>
+
+                <button
+                    class="submit"
+                    id="submitButton"
+                    type="submit"
+                >
+                    LEAVE IT WITH ME ❤️
+                </button>
+
+                <div
+                    class="status"
+                    id="status"
+                ></div>
+
+            </form>
+
         </div>
 
-        <div class="eyebrow">
-            A little question for you
-        </div>
 
-        <h1 class="title">
-            My Sweet<br>
-            <em>🦋🦋</em>
-        </h1>
-
-        <p class="question">
-            I have something simple to ask you...
-            <br><br>
-
-            <strong>
-                Will you let me love you,
-                make you smile,
-                and keep choosing you?
-            </strong>
-        </p>
-
-        <div class="buttons">
-
-            <button
-                class="btn yes"
-                id="yesBtn"
-            >
-                Yes, my love ❤️
-            </button>
-
-            <button
-                class="btn no"
-                id="noBtn"
-            >
-                No 🙈
-            </button>
-
-        </div>
+        <!-- SUCCESS SCREEN -->
 
         <div
-            class="hint"
-            id="hint"
+            id="successScreen"
+            class="success-screen"
         >
-            choose carefully 🤭
+
+            <div class="success-heart">
+                ❤️
+            </div>
+
+            <div class="eyebrow">
+                ANSWER RECEIVED
+            </div>
+
+            <h2 class="success-title">
+                I got<br>
+                <em>your heart.</em>
+            </h2>
+
+            <p class="success-copy">
+                Your words are safely with me now.
+                Keep the little password you created close.
+                Some things are more beautiful
+                when they're just ours.
+            </p>
+
         </div>
 
-        <div class="footer">
-            MADE WITH A LITTLE TOO MUCH LOVE
-        </div>
-
-    </section>
+    </div>
 
 </main>
 
 
-<!-- SUCCESS -->
-
-<section
-    class="success"
-    id="success"
->
-
-    <div class="success-inner">
-
-        <div class="success-icon">
-            🦋❤️🦋
-        </div>
-
-        <div class="eyebrow">
-            YOU JUST MADE MY HEART HAPPY
-        </div>
-
-        <h2 class="success-title">
-            You said<br>
-            <em>yes.</em>
-        </h2>
-
-        <p class="success-text">
-
-            Then it's settled. ❤️
-
-            <br><br>
-
-            I don't promise that every day
-            will be perfect.
-
-            I promise that whenever I get the
-            chance, I'll choose you,
-            appreciate you,
-            and remind you how special you are.
-
-            <br><br>
-
-            And if you ever forget...
-
-            <br>
-
-            <strong>
-                come back to this little page.
-            </strong>
-
-        </p>
-
-        <div class="signature">
-            Always yours. ❤️
-        </div>
-
-    </div>
-
-</section>
-
-
 <script>
 
-/* =================================
+/* =========================================
+   SUPABASE
+========================================= */
+
+const SUPABASE_URL =
+    "https://bayqhtmttrscgmmjrndj.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_eyWrxI_zuO7n6M3KNEAbNQ_38qXJuIx";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =========================================
    ICONS
-================================= */
+========================================= */
 
 lucide.createIcons();
 
 
-/* =================================
+/* =========================================
    ELEMENTS
-================================= */
+========================================= */
 
-const yesBtn =
-    document.getElementById("yesBtn");
+const form =
+    document.getElementById("loveForm");
 
-const noBtn =
-    document.getElementById("noBtn");
+const answer =
+    document.getElementById("answer");
 
-const hint =
-    document.getElementById("hint");
+const herPassword =
+    document.getElementById("herPassword");
 
-const card =
-    document.getElementById("card");
+const submitButton =
+    document.getElementById("submitButton");
 
-const success =
-    document.getElementById("success");
+const status =
+    document.getElementById("status");
 
-const butterflies =
-    document.getElementById("butterflies");
+const questionScreen =
+    document.getElementById("questionScreen");
 
-const hearts =
-    document.getElementById("hearts");
+const successScreen =
+    document.getElementById("successScreen");
 
-
-/* =================================
-   FLOATING BUTTERFLIES
-================================= */
-
-const butterflySymbols =
-    ["🦋","🦋","🦋","✨"];
-
-for(let i=0;i<18;i++){
-
-    const b =
-        document.createElement("div");
-
-    b.className =
-        "butterfly";
-
-    b.textContent =
-        butterflySymbols[
-            Math.floor(
-                Math.random() *
-                butterflySymbols.length
-            )
-        ];
-
-    b.style.left =
-        Math.random()*100 + "%";
-
-    b.style.animationDuration =
-        (10 + Math.random()*14) + "s";
-
-    b.style.animationDelay =
-        (-Math.random()*20) + "s";
-
-    b.style.fontSize =
-        (12 + Math.random()*16) + "px";
-
-    butterflies.appendChild(b);
-}
+const showPassword =
+    document.getElementById("showPassword");
 
 
-/* =================================
-   FLOATING HEARTS
-================================= */
+/* =========================================
+   SHOW / HIDE PASSWORD
+========================================= */
 
-for(let i=0;i<22;i++){
+showPassword.addEventListener(
+    "click",
+    function(){
 
-    const h =
-        document.createElement("div");
+        if(herPassword.type === "password"){
 
-    h.className =
-        "heart";
+            herPassword.type = "text";
 
-    h.textContent =
-        Math.random() > .5
-        ? "♡"
-        : "·";
+            showPassword.innerHTML =
+                '<i data-lucide="eye-off"></i>';
 
-    h.style.left =
-        Math.random()*100 + "%";
+        }else{
 
-    h.style.animationDuration =
-        (8 + Math.random()*14) + "s";
+            herPassword.type = "password";
 
-    h.style.animationDelay =
-        (-Math.random()*20) + "s";
+            showPassword.innerHTML =
+                '<i data-lucide="eye"></i>';
 
-    hearts.appendChild(h);
-}
+        }
 
+        lucide.createIcons();
 
-/* =================================
-   NO BUTTON
-================================= */
-
-let noCount = 0;
-
-const messages = [
-
-    "are you sure? 🥺",
-
-    "think again, my sweet 🦋",
-
-    "that button seems suspicious 🤭",
-
-    "my heart says try again ❤️",
-
-    "you really want to say no? 🥹",
-
-    "I'll wait... 🦋",
-
-    "the YES button looks better 😭❤️",
-
-    "okay okay... one more chance? 🥺"
-
-];
-
-
-function moveNoButton(){
-
-    noCount++;
-
-    hint.textContent =
-        messages[
-            Math.min(
-                noCount - 1,
-                messages.length - 1
-            )
-        ];
-
-    const cardRect =
-        card.getBoundingClientRect();
-
-    const buttonRect =
-        noBtn.getBoundingClientRect();
-
-    const padding = 15;
-
-    const maxX =
-        Math.max(
-            0,
-            cardRect.width -
-            buttonRect.width -
-            padding*2
-        );
-
-    const maxY = 130;
-
-    const x =
-        (Math.random()-.5) *
-        Math.min(maxX,180);
-
-    const y =
-        (Math.random()-.5) *
-        Math.min(maxY,80);
-
-    noBtn.style.transform =
-        `translate(${x}px,${y}px)`;
-
-}
-
-
-/* Desktop */
-
-noBtn.addEventListener(
-    "mouseenter",
-    moveNoButton
+    }
 );
 
 
-/* Mobile */
+/* =========================================
+   SUBMIT ANSWER
+========================================= */
 
-noBtn.addEventListener(
-    "touchstart",
-    function(e){
+form.addEventListener(
+    "submit",
+    async function(e){
 
         e.preventDefault();
 
-        moveNoButton();
+        const answerValue =
+            answer.value.trim();
 
-    },
-    {passive:false}
-);
+        const passwordValue =
+            herPassword.value.trim();
+
+        if(!answerValue){
+
+            status.textContent =
+                "WRITE SOMETHING FOR ME ❤️";
+
+            status.className =
+                "status error";
+
+            return;
+
+        }
+
+        if(!passwordValue){
+
+            status.textContent =
+                "CREATE YOUR LITTLE PASSWORD";
+
+            status.className =
+                "status error";
+
+            return;
+
+        }
 
 
-/* =================================
-   NO CLICK
-================================= */
+        submitButton.disabled = true;
 
-noBtn.addEventListener(
-    "click",
-    function(){
+        submitButton.textContent =
+            "SAVING YOUR WORDS...";
 
-        moveNoButton();
+        status.textContent =
+            "";
+
+
+        try{
+
+            const { data, error } =
+                await supabaseClient
+                    .from("love_answers")
+                    .insert([
+                        {
+                            answer: answerValue,
+                            her_password: passwordValue
+                        }
+                    ])
+                    .select();
+
+
+            if(error){
+
+                console.error(error);
+
+                throw error;
+
+            }
+
+
+            /* SUCCESS */
+
+            questionScreen.style.display =
+                "none";
+
+            successScreen.style.display =
+                "block";
+
+
+            /* SUCCESS ANIMATION */
+
+            successScreen.animate(
+                [
+                    {
+                        opacity:0,
+                        transform:"translateY(30px) scale(.97)"
+                    },
+                    {
+                        opacity:1,
+                        transform:"translateY(0) scale(1)"
+                    }
+                ],
+                {
+                    duration:1000,
+                    easing:"cubic-bezier(.16,1,.3,1)",
+                    fill:"forwards"
+                }
+            );
+
+
+        }catch(error){
+
+            status.textContent =
+                "SOMETHING WENT WRONG · PLEASE TRY AGAIN";
+
+            status.className =
+                "status error";
+
+            submitButton.disabled =
+                false;
+
+            submitButton.textContent =
+                "LEAVE IT WITH ME ❤️";
+
+        }
 
     }
 );
 
 
-/* =================================
-   YES BUTTON
-================================= */
+/* =========================================
+   FLOATING HEARTS
+========================================= */
 
-yesBtn.addEventListener(
-    "click",
-    function(){
+function createHearts(){
 
-        createConfetti();
+    const container =
+        document.getElementById("floating");
 
-        card.style.transition =
-            "1s cubic-bezier(.16,1,.3,1)";
+    for(let i=0;i<28;i++){
 
-        card.style.opacity =
-            "0";
+        const heart =
+            document.createElement("span");
 
-        card.style.transform =
-            "scale(.92) translateY(-20px)";
+        heart.className =
+            "heart";
 
-        setTimeout(
-            function(){
+        heart.textContent =
+            Math.random() > .5 ? "♡" : "♥";
 
-                success.classList.add("show");
+        heart.style.left =
+            Math.random()*100 + "%";
 
-            },
-            650
-        );
+        heart.style.top =
+            (70 + Math.random()*40) + "%";
 
-    }
-);
+        heart.style.fontSize =
+            (8 + Math.random()*15) + "px";
 
+        heart.style.animationDuration =
+            (7 + Math.random()*8) + "s";
 
-/* =================================
-   CONFETTI
-================================= */
+        heart.style.animationDelay =
+            (-Math.random()*12) + "s";
 
-function createConfetti(){
-
-    const symbols =
-        ["❤️","🦋","♡","✨","💗"];
-
-    for(let i=0;i<70;i++){
-
-        const piece =
-            document.createElement("div");
-
-        piece.className =
-            "confetti";
-
-        piece.textContent =
-            symbols[
-                Math.floor(
-                    Math.random() *
-                    symbols.length
-                )
-            ];
-
-        piece.style.left =
-            "50%";
-
-        piece.style.top =
-            "50%";
-
-        piece.style.fontSize =
-            (10 + Math.random()*18) + "px";
-
-        piece.style.setProperty(
-            "--x",
-            ((Math.random()-.5)*window.innerWidth*1.5)
-            + "px"
-        );
-
-        piece.style.setProperty(
-            "--y",
-            ((Math.random()-.5)*window.innerHeight*1.5)
-            + "px"
-        );
-
-        document.body.appendChild(piece);
-
-        setTimeout(
-            ()=>piece.remove(),
-            3200
-        );
+        container.appendChild(heart);
 
     }
 
 }
 
-
-/* =================================
-   LITTLE CARD MOVEMENT
-================================= */
-
-let lastMove = 0;
-
-document.addEventListener(
-    "mousemove",
-    function(e){
-
-        const now =
-            Date.now();
-
-        if(now-lastMove < 40)
-            return;
-
-        lastMove = now;
-
-        const x =
-            (e.clientX/window.innerWidth-.5);
-
-        const y =
-            (e.clientY/window.innerHeight-.5);
-
-        card.style.transform =
-            `perspective(1000px)
-             rotateY(${x*2}deg)
-             rotateX(${y*-2}deg)`;
-
-    }
-);
-
-document.addEventListener(
-    "mouseleave",
-    function(){
-
-        card.style.transform =
-            "perspective(1000px) rotateY(0) rotateX(0)";
-
-    }
-);
+createHearts();
 
 </script>
 
